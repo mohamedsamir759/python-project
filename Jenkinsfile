@@ -1,89 +1,117 @@
-pipeline {
+  pipeline {
+
+
 
         agent any
 
+
+
         stages {
 
-                stage('Clone') {
 
-                        steps {
-
-                        git branch: 'main'
-
-                        url: 'https://github.com/mohamedsamir759/python-project.git'
-
-                        }
-
-                }
 
                 stage('Build') {
 
+
+
                         steps {
+
+
 
                         sh '''
 
-                        cd "${JENKINS_HOME}/workspace/myjob1"
+
+
+                        cd "${JENKINS_HOME}/workspace/pipline.py"
+
+
 
                         docker build -t appx:v${BUILD_NUMBER} .
 
+
+
                         '''
 
-                }
+
+
+              		}
+
+
 
                 }
 
-                stage('Deploy-docker') {
+
+
+        	stage('Deploy-docker') {
+
+
 
                         steps {
 
+
+
                         sh '''
 
-                        docker run -d --name testappx -p 80:8080 appx:v${BUILD_NUMBER} 
+
+
+                        docker run -d --name testappx$BUILD_NUMBER appx:v${BUILD_NUMBER} 
+
+
 
                         '''
 
+
+
                         }
 
+
+
                 }
 
-             
-	        stage('Remove Container') {
+                
 
-                        steps{
+                stage('remove container testappx') {
 
-             	        sh ''' 
-	                docker rm -f testappx$BUILD_NUMBER
-			docker run -d --name testappx%{BUILD_NUMBER} -p 80:8080 appx:v${BUILD_NUMBER}			
-           	        echo 'Docker Container Successfully Removed'
-			   '''
-		 	}
 
- 		}             
-    
 
-	        stage('Deploy App On KuberNetes') {
+                        steps {
 
-        	        steps{
-	
+
+
+                        sh '''
+
+
+
+                        docker remove -f appx:v${BUILD_NUMBER} 
+
+
+
+                        '''
+
+
+
+
+
+	         stage('Deploy App On kubernetes') {
+
+        		steps {
+
         	        sh '''
-		 	cd kubernetes && kubectl apply -f .
 
-            }
+		  	cd Kubernetes && kubectl apply -f .
 
-            post {
+    		        echo 'App Successfully Deployed'
 
-                success {
+       			'''
 
-                    echo 'App Successfully Deployed'
+                        }
+
+
 
                 }
 
-            }
 
-        }
 
-    }
+	}
 
 }
-
-           
