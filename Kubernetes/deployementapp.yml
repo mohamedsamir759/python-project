@@ -1,0 +1,25 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+
+  labels:
+
+    run: deploymentapp
+
+  name: deploymentapp
+
+spec:
+
+  containers:
+
+  - image: mohamedsamir759/mypythonapp:latest
+
+    name: deploymentapp
+
+    ports:
+
+    - containerPort: 8080
+
+

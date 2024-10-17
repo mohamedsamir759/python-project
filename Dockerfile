@@ -6,4 +6,4 @@ RUN  apt install python3 -y
 COPY . /main
 WORKDIR /main
 CMD ["python3","main"]
-
+EXPOSE 8080
