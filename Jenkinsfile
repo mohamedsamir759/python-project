@@ -4,7 +4,7 @@
                 stage('Build') {
                         steps {
                         sh '''
-                        cd "${JENKINS_HOME}/workspace/pipline.py"
+                        cd "${JENKINS_HOME}/workspace/app.py"
                         docker build -t appx:v${BUILD_NUMBER} .
                         '''
               		}
