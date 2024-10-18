@@ -26,7 +26,7 @@
 	         stage('Deploy App On kubernetes') {
         		steps {
         	        sh '''
-		  	cd Kubernetes && kubectl apply -f .
+		  	cd Kubernetes && kubectl apply -f deployementapp.yml
     		        echo 'App Successfully Deployed'
        			'''
                         }
