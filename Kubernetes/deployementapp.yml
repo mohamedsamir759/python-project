@@ -1,25 +1,34 @@
-apiVersion: v1
+apiVersion: apps/v1
 
-kind: Pod
+kind: Deployment
 
 metadata:
 
-  labels:
+  name: myapp
 
-    run: deploymentapp
+  labels: 
 
-  name: deploymentapp
+    app: myapp
 
 spec:
 
-  containers:
+  replicas: 2
 
-  - image: mohamedsamir759/mypythonapp:latest
+  selector:
 
-    name: deploymentapp
+    matchLabels:
 
-    ports:
+      app: myapp
 
-    - containerPort: 8080
+  spec:
 
+    containers:
 
+    - name: myapp
+
+      image: mohamedsamir759/mypythonapp:latest
+
+      ports:
+
+        - containerPort: 8080
+ 
